@@ -4,6 +4,7 @@
 #
 # Author:: David King, xforty technologies <dking@xforty.com>
 # Contributor:: Patrick Connolly, Myplanet Digital <patrick@myplanetdigital.com>
+# Contributor:: Alex Kestner, HealthGuru, Inc. <akestner@healthguru.com>
 #
 # Copyright 2012, xforty technologies
 #
@@ -23,7 +24,7 @@
 include_recipe "php"
 
 # install xdebug apache module
-php_pear "xdebug" do
+package "php5-xdebug" do
   version node['xdebug']['version']
   action :install
 end
@@ -36,7 +37,7 @@ template "#{node['php']['ext_conf_dir']}/xdebug.ini" do
   mode 0644
   # TODO: Move logic from template to recipe later?
   # variable( :extension_dir => node['php']['php_extension_dir'] )
-  notifies :restart, resources("service[apache2]"), :delayed
+  notifies :restart, resources("service[#{default[:xdebug][:webserver]}]"), :delayed
 end
 
 file node['xdebug']['remote_log'] do
@@ -46,7 +47,3 @@ file node['xdebug']['remote_log'] do
   action :create_if_missing
   not_if { node['xdebug']['remote_log'].empty? }
 end
-
-# TODO: somehow add this line to php.ini (is this necessary?)
-# zend_extension="/usr/local/php/modules/xdebug.so"
-

@@ -4,6 +4,7 @@
 #
 # Author:: David King, xforty technologies <dking@xforty.com>
 # Contributor:: Patrick Connolly <patrick@myplanetdigital.com>
+# Contributor:: Alex Kestner, HealthGuru, Inc. <akestner@healthguru.com>
 #
 # Copyright 2012, xforty technologies
 #
@@ -25,6 +26,8 @@
 # TODO: implement preferred_state attribute and logic once pear bug is fixed
 
 default[:xdebug][:version] = '2.1.3'
+default[:xdebug][:webserver] = "nginx"
+#default[:xdebug][:webserver] = "apache2"
 
 # XDEBUG.INI OPTIONS
 default[:xdebug][:auto_trace]                = 0
